@@ -11,6 +11,8 @@
 # production
 /build
 
+generateService.js
+
 # misc
 .DS_Store
 .env.local
