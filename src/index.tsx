@@ -1,17 +1,13 @@
-import { ColorModeScript } from "@chakra-ui/react"
-import * as React from "react"
-import ReactDOM from "react-dom"
-import { App } from "./App"
-import reportWebVitals from "./reportWebVitals"
-import * as serviceWorker from "./serviceWorker"
+import * as React from 'react'
+import ReactDOM from 'react-dom'
+import { App } from './App'
+import reportWebVitals from './reportWebVitals'
+import { setupService } from './service/axios'
+import * as serviceWorker from './serviceWorker'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <ColorModeScript />
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root"),
-)
+setupService()
+
+ReactDOM.render(<App />, document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
