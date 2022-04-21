@@ -8,4 +8,8 @@ export const NavItems: NavItem[] = [
         text: 'Cities',
         link: '/city',
     },
+    {
+        text: 'Predictions',
+        link: '/predictions',
+    },
 ]

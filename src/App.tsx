@@ -8,6 +8,7 @@ import { CityNew } from './components/@pages/CityNew'
 import { Home } from './components/@pages/Home'
 import { NeuralModelDetails } from './components/@pages/NeuralModelDetails'
 import { NeuralNetworkNew } from './components/@pages/NeuralModelNew'
+import { Predictions } from './components/@pages/Predictions'
 
 export const App = () => (
     <React.StrictMode>
@@ -25,6 +26,9 @@ export const App = () => (
                         <Route path="neural-model">
                             <Route path="new" element={<NeuralNetworkNew />}></Route>
                             <Route path=":id" element={<NeuralModelDetails />}></Route>
+                        </Route>
+                        <Route path="predictions">
+                            <Route index element={<Predictions />}></Route>
                         </Route>
                     </Route>
                 </Routes>
