@@ -6,6 +6,6 @@ export interface NavItem {
 export const NavItems: NavItem[] = [
     {
         text: 'Cities',
-        link: '/cities',
+        link: '/city',
     },
 ]

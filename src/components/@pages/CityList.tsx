@@ -1,15 +1,5 @@
 import { DeleteIcon } from '@chakra-ui/icons'
-import {
-    Heading,
-    Table,
-    TableCaption,
-    TableContainer,
-    Tbody,
-    Td,
-    Th,
-    Thead,
-    Tr,
-} from '@chakra-ui/react'
+import { Heading, IconButton, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -25,6 +15,12 @@ export const CityList: React.FC = () => {
             setCityList(cities)
         })
     }, [setCityList])
+
+    const deleteCity = (id: number) => {
+        CityService.remove({ id: id.toString() }, { data: { please: true } }).then(() => {
+            setCityList(cityList.filter(c => c.id !== id))
+        })
+    }
 
     return (
         <Page>
@@ -43,26 +39,25 @@ export const CityList: React.FC = () => {
                         {cityList.map(city => (
                             <Tr key={city.id}>
                                 <Td>
-                                    <Link to={`city/${city.id}`}>
-                                        {city.name}
-                                    </Link>
+                                    <Link to={`/city/${city.id}`}>{city.name}</Link>
                                 </Td>
                                 <Td>
                                     {city.lat}, {city.lon}
                                 </Td>
                                 <Td>
-                                    <LinkButton
-                                        leftIcon={<DeleteIcon />}
-                                        color={'red'}
-                                        href="#"
-                                    ></LinkButton>
+                                    <IconButton
+                                        aria-label="Delete city"
+                                        colorScheme={'red'}
+                                        icon={<DeleteIcon />}
+                                        onClick={() => deleteCity(city.id)}
+                                    />
                                 </Td>
                             </Tr>
                         ))}
                     </Tbody>
                 </Table>
             </TableContainer>
-            <LinkButton href="/cities/new">Add new city</LinkButton>
+            <LinkButton href="/city/new">Add new city</LinkButton>
         </Page>
     )
 }

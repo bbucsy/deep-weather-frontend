@@ -26,11 +26,7 @@ export interface ServiceOptions {
 export const serviceOptions: ServiceOptions = {}
 
 // Instance selector
-export function axios(
-    configs: IRequestConfig,
-    resolve: (p: any) => void,
-    reject: (p: any) => void
-): Promise<any> {
+export function axios(configs: IRequestConfig, resolve: (p: any) => void, reject: (p: any) => void): Promise<any> {
     if (serviceOptions.axios) {
         return serviceOptions.axios
             .request(configs)
@@ -45,12 +41,7 @@ export function axios(
     }
 }
 
-export function getConfigs(
-    method: string,
-    contentType: string,
-    url: string,
-    options: any
-): IRequestConfig {
+export function getConfigs(method: string, contentType: string, url: string, options: any): IRequestConfig {
     const configs: IRequestConfig = { ...options, method, url }
     configs.headers = {
         ...options.headers,
@@ -93,18 +84,11 @@ export class PredictionsService {
     /**
      *
      */
-    static responses(
-        options: IRequestOptions = {}
-    ): Promise<ResponseListDto[]> {
+    static responses(options: IRequestOptions = {}): Promise<ResponseListDto[]> {
         return new Promise((resolve, reject) => {
             let url = basePath + '/predictions/responses'
 
-            const configs: IRequestConfig = getConfigs(
-                'get',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('get', 'application/json', url, options)
 
             /** 适配ios13，get请求不允许带body */
 
@@ -124,12 +108,7 @@ export class PredictionsService {
         return new Promise((resolve, reject) => {
             let url = basePath + '/predictions/responses'
 
-            const configs: IRequestConfig = getConfigs(
-                'post',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('post', 'application/json', url, options)
 
             let data = params.body
 
@@ -152,12 +131,7 @@ export class PredictionsService {
             let url = basePath + '/predictions/city/{city_id}'
             url = url.replace('{city_id}', params['cityId'] + '')
 
-            const configs: IRequestConfig = getConfigs(
-                'get',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('get', 'application/json', url, options)
 
             /** 适配ios13，get请求不允许带body */
 
@@ -167,18 +141,11 @@ export class PredictionsService {
     /**
      *
      */
-    static currentPredictions(
-        options: IRequestOptions = {}
-    ): Promise<PredictionListDto[]> {
+    static currentPredictions(options: IRequestOptions = {}): Promise<PredictionListDto[]> {
         return new Promise((resolve, reject) => {
             let url = basePath + '/predictions'
 
-            const configs: IRequestConfig = getConfigs(
-                'get',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('get', 'application/json', url, options)
 
             /** 适配ios13，get请求不允许带body */
 
@@ -201,12 +168,7 @@ export class CityService {
         return new Promise((resolve, reject) => {
             let url = basePath + '/city'
 
-            const configs: IRequestConfig = getConfigs(
-                'post',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('post', 'application/json', url, options)
 
             let data = params.body
 
@@ -222,12 +184,7 @@ export class CityService {
         return new Promise((resolve, reject) => {
             let url = basePath + '/city'
 
-            const configs: IRequestConfig = getConfigs(
-                'get',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('get', 'application/json', url, options)
 
             /** 适配ios13，get请求不允许带body */
 
@@ -248,12 +205,7 @@ export class CityService {
             let url = basePath + '/city/{id}'
             url = url.replace('{id}', params['id'] + '')
 
-            const configs: IRequestConfig = getConfigs(
-                'get',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('get', 'application/json', url, options)
 
             /** 适配ios13，get请求不允许带body */
 
@@ -274,14 +226,9 @@ export class CityService {
             let url = basePath + '/city/{id}'
             url = url.replace('{id}', params['id'] + '')
 
-            const configs: IRequestConfig = getConfigs(
-                'delete',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('delete', 'application/json', url, options)
 
-            let data = null
+            let data = {}
 
             configs.data = data
 
@@ -304,12 +251,7 @@ export class NeuralModelService {
         return new Promise((resolve, reject) => {
             let url = basePath + '/neural-model'
 
-            const configs: IRequestConfig = getConfigs(
-                'post',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('post', 'application/json', url, options)
 
             let data = params.body
 
@@ -321,18 +263,11 @@ export class NeuralModelService {
     /**
      *
      */
-    static findAllModels(
-        options: IRequestOptions = {}
-    ): Promise<NeuralModelListDto[]> {
+    static findAllModels(options: IRequestOptions = {}): Promise<NeuralModelListDto[]> {
         return new Promise((resolve, reject) => {
             let url = basePath + '/neural-model'
 
-            const configs: IRequestConfig = getConfigs(
-                'get',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('get', 'application/json', url, options)
 
             /** 适配ios13，get请求不允许带body */
 
@@ -346,12 +281,7 @@ export class NeuralModelService {
         return new Promise((resolve, reject) => {
             let url = basePath + '/neural-model/predict'
 
-            const configs: IRequestConfig = getConfigs(
-                'post',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('post', 'application/json', url, options)
 
             let data = null
 
@@ -367,12 +297,7 @@ export class NeuralModelService {
         return new Promise((resolve, reject) => {
             let url = basePath + '/neural-model/retrain'
 
-            const configs: IRequestConfig = getConfigs(
-                'post',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('post', 'application/json', url, options)
 
             let data = null
 
@@ -395,12 +320,7 @@ export class NeuralModelService {
             let url = basePath + '/neural-model/{id}'
             url = url.replace('{id}', params['id'] + '')
 
-            const configs: IRequestConfig = getConfigs(
-                'get',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('get', 'application/json', url, options)
 
             /** 适配ios13，get请求不允许带body */
 
@@ -423,12 +343,7 @@ export class AuthService {
         return new Promise((resolve, reject) => {
             let url = basePath + '/auth/login'
 
-            const configs: IRequestConfig = getConfigs(
-                'post',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('post', 'application/json', url, options)
 
             let data = params.body
 
@@ -450,12 +365,7 @@ export class AuthService {
         return new Promise((resolve, reject) => {
             let url = basePath + '/auth/register'
 
-            const configs: IRequestConfig = getConfigs(
-                'post',
-                'application/json',
-                url,
-                options
-            )
+            const configs: IRequestConfig = getConfigs('post', 'application/json', url, options)
 
             let data = params.body
 
