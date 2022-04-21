@@ -2,10 +2,7 @@ import * as React from 'react'
 import ReactDOM from 'react-dom'
 import { App } from './App'
 import reportWebVitals from './reportWebVitals'
-import { setupService } from './service/axios'
 import * as serviceWorker from './serviceWorker'
-
-setupService()
 
 ReactDOM.render(<App />, document.getElementById('root'))
 

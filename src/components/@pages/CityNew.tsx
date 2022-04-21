@@ -1,7 +1,8 @@
 import { FormControl, FormLabel, Input, FormErrorMessage, Button } from '@chakra-ui/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { CityService, CreateCityDto } from '../../service/service'
+import { CityService, CreateCityDto } from '../../service'
+
 import { Page } from '../@layout/Page'
 
 export const CityNew: React.FC = () => {
@@ -14,7 +15,7 @@ export const CityNew: React.FC = () => {
     const navigate = useNavigate()
 
     const onSubmit: SubmitHandler<CreateCityDto> = data => {
-        CityService.create({ body: data }).then(() => {
+        CityService.create(data).then(() => {
             navigate('/city')
         })
     }

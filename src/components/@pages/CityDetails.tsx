@@ -1,7 +1,8 @@
 import { Heading, Table, TableCaption, TableContainer, Tbody, Text, Th, Thead, Tr } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { CityDto, CityService } from '../../service/service'
+import { CityDto, CityService } from '../../service'
+
 import { NeuralModelTableItem } from '../@common/NeuralModelTableItem'
 import { Paragraph } from '../@common/Paragraph'
 import { Page } from '../@layout/Page'
@@ -11,7 +12,9 @@ export const CityDetails: React.FC = () => {
     const [city, setCity] = useState<CityDto>()
 
     useEffect(() => {
-        CityService.findOne({ id: +id! }).then(setCity)
+        CityService.findOne(Number.parseInt(id!)).then(res => {
+            setCity(res.data)
+        })
     }, [id, setCity])
 
     return (

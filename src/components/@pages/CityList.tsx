@@ -2,8 +2,8 @@ import { DeleteIcon } from '@chakra-ui/icons'
 import { Heading, IconButton, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { CityDto, CityService } from '../../service'
 
-import { CityDto, CityService } from '../../service/service'
 import { LinkButton } from '../@common/LinkButton'
 import { Page } from '../@layout/Page'
 
@@ -12,13 +12,13 @@ export const CityList: React.FC = () => {
 
     useEffect(() => {
         CityService.findAll().then(cities => {
-            setCityList(cities)
+            setCityList(cities.data)
         })
     }, [setCityList])
 
     const deleteCity = (id: number) => {
-        CityService.remove({ id: id.toString() }, { data: { please: true } }).then(() => {
-            setCityList(cityList.filter(c => c.id !== id))
+        CityService.remove(id.toString()).then(() => {
+            setCityList(cityList.filter(city => city.id !== id))
         })
     }
 
