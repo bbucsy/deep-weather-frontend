@@ -1,10 +1,36 @@
-import { Td, Tr } from '@chakra-ui/react'
+import { CheckIcon, InfoIcon } from '@chakra-ui/icons'
+import { Badge, Spinner, Td, Tr } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { NeuralModelDto, NeuralModelService } from '../../service'
 
 export interface NMTIProps {
     id: number
     name: string
+}
+
+export const neruralModelStatus = (status: number) => {
+    switch (status) {
+        case 0:
+            return (
+                <Badge colorScheme="yellow">
+                    Training
+                    <Spinner />
+                </Badge>
+            )
+        case 1:
+            return (
+                <Badge colorScheme="green">
+                    Operating <CheckIcon />
+                </Badge>
+            )
+        default:
+            return (
+                <Badge colorScheme="red">
+                    Failed <InfoIcon />
+                </Badge>
+            )
+    }
 }
 
 export const NeuralModelTableItem: React.FC<NMTIProps> = ({ id, name }: NMTIProps) => {
@@ -16,9 +42,11 @@ export const NeuralModelTableItem: React.FC<NMTIProps> = ({ id, name }: NMTIProp
 
     return (
         <Tr>
-            <Td>{name}</Td>
-            <Td>{model?.accuracy}%</Td>
-            <Td>{model?.status}%</Td>
+            <Td>
+                <Link to={`/neural-model/${id}`}>{name}</Link>{' '}
+            </Td>
+            <Td>{model?.accuracy.toFixed(2) || 'N/A'}%</Td>
+            <Td>{neruralModelStatus(model?.status!)}</Td>
         </Tr>
     )
 }

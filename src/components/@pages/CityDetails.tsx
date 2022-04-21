@@ -1,7 +1,9 @@
-import { Heading, Table, TableCaption, TableContainer, Tbody, Text, Th, Thead, Tr } from '@chakra-ui/react'
+import { Divider, Heading, Table, TableCaption, TableContainer, Tbody, Text, Th, Thead, Tr } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { CityDto, CityService } from '../../service'
+import { CoordinateText } from '../@common/CoordinateText'
+import { LinkButton } from '../@common/LinkButton'
 
 import { NeuralModelTableItem } from '../@common/NeuralModelTableItem'
 import { Paragraph } from '../@common/Paragraph'
@@ -20,16 +22,17 @@ export const CityDetails: React.FC = () => {
     return (
         <Page>
             <Heading>{city?.name}</Heading>
+            <Divider />
             <Paragraph>
                 <Text as={'span'} fontWeight={'bold'}>
                     Coordinates:
                 </Text>{' '}
-                {city?.lat}, {city?.lon}
+                <CoordinateText latitude={city?.lat!} longitude={city?.lon!}></CoordinateText>
             </Paragraph>
 
             <TableContainer>
                 <Table variant="simple">
-                    <TableCaption>Neural-models connected to {city?.name}</TableCaption>
+                    <TableCaption placement="top">Neural-models connected to {city?.name}</TableCaption>
                     <Thead>
                         <Tr>
                             <Th>Name</Th>
@@ -44,6 +47,7 @@ export const CityDetails: React.FC = () => {
                     </Tbody>
                 </Table>
             </TableContainer>
+            <LinkButton href={`/neural-model/new?city=${city?.id}`}>Create new model</LinkButton>
         </Page>
     )
 }
