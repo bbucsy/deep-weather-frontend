@@ -1,7 +1,8 @@
 import { ExternalLinkIcon } from '@chakra-ui/icons'
-import { Divider, Select, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import { Box, Divider, Select } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
-import { CityDto, CityService, PredictionListDto, PredictionService } from '../../service'
+import { CityDto, CityService } from '../../service'
+import { PredictionsTab } from '../@common/PredictionsTab'
 import { Page } from '../@layout/Page'
 
 export const Predictions: React.FC = () => {
@@ -9,30 +10,18 @@ export const Predictions: React.FC = () => {
 
     const [selectedCityId, setSelectedCityId] = useState<number>()
 
-    const [predictions, setPredictions] = useState<PredictionListDto[]>([])
-
     const selectionChanged = (e: any) => {
         console.log(e.target.value)
         setSelectedCityId(e.target.value)
-        reloadPredictions(e.target.value)
     }
 
     useEffect(() => {
-        console.log('Effect used')
         CityService.findAll().then(res => {
             setCityList(res.data)
             setSelectedCityId(res.data[0]?.id)
-            reloadPredictions(selectedCityId)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [setCityList, setSelectedCityId, setPredictions])
-
-    const reloadPredictions = (cityId?: number) => {
-        if (typeof cityId === 'undefined') return
-        PredictionService.currentPredictionsOfCity(cityId).then(result => {
-            setPredictions(result.data)
-        })
-    }
+    }, [setCityList, setSelectedCityId])
 
     return (
         <Page>
@@ -47,24 +36,9 @@ export const Predictions: React.FC = () => {
             )}
 
             <Divider />
-
-            <Tabs>
-                <TabList>
-                    {predictions.map(p => (
-                        <Tab key={p.id}>{p.model.name}</Tab>
-                    ))}
-                </TabList>
-
-                <TabPanels>
-                    {predictions.map(p => (
-                        <TabPanel key={p.id}>
-                            <p>
-                                {p.predictedLabel}, {p.userResponseLabel}
-                            </p>
-                        </TabPanel>
-                    ))}
-                </TabPanels>
-            </Tabs>
+            <Box mt="5">
+                <PredictionsTab cityId={selectedCityId} />
+            </Box>
         </Page>
     )
 }
