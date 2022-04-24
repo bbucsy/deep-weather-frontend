@@ -1,6 +1,7 @@
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { AuthPage } from './components/@pages/AuthPage'
 import { CityDetails } from './components/@pages/CityDetails'
 import { CityList } from './components/@pages/CityList'
 import { CityNew } from './components/@pages/CityNew'
@@ -29,6 +30,9 @@ export const App = () => (
                         </Route>
                         <Route path="predictions">
                             <Route index element={<Predictions />}></Route>
+                        </Route>
+                        <Route path="auth">
+                            <Route index element={<AuthPage />}></Route>
                         </Route>
                     </Route>
                 </Routes>
