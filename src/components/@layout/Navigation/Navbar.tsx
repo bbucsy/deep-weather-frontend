@@ -1,24 +1,9 @@
-import {
-    Box,
-    Flex,
-    HStack,
-    IconButton,
-    Button,
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    MenuDivider,
-    useDisclosure,
-    useColorModeValue,
-    Stack,
-    Text,
-} from '@chakra-ui/react'
+import { Box, Flex, HStack, IconButton, useDisclosure, useColorModeValue, Stack } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { Link } from 'react-router-dom'
 import { NavItem, NavItems } from '../../../utils/NavItem'
 import { Logo } from './Logo'
-import { useAuthContext } from '../../../utils/useAuthContext'
+import { UserButton } from '../../@common/UserButton'
 
 const NavLink = ({ navitem }: { navitem: NavItem }) => (
     <Box
@@ -36,8 +21,6 @@ const NavLink = ({ navitem }: { navitem: NavItem }) => (
 
 export const Navbar: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-
-    const { isLoggedIn, profile } = useAuthContext()
 
     return (
         <>
@@ -59,17 +42,7 @@ export const Navbar: React.FC = () => {
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
-                        <Menu>
-                            <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
-                                <Text>{isLoggedIn ? profile?.username : 'LogIn'}</Text>
-                            </MenuButton>
-                            <MenuList>
-                                <MenuItem>Link 1</MenuItem>
-                                <MenuItem>Link 2</MenuItem>
-                                <MenuDivider />
-                                <MenuItem>Link 3</MenuItem>
-                            </MenuList>
-                        </Menu>
+                        <UserButton />
                     </Flex>
                 </Flex>
 

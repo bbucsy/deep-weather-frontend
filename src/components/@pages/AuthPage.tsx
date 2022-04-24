@@ -42,7 +42,7 @@ export const AuthPage: React.FC = () => {
                                     <FormLabel>Password</FormLabel>
                                     <Input {...register('password')} type="password" />
                                 </FormControl>
-                                <Stack spacing={10}>
+                                <Stack spacing={10} mt="5">
                                     <Text>
                                         Or{' '}
                                         <Link as="span" color="blue" onClick={changeForm}>

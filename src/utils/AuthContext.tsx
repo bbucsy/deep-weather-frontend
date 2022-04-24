@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
 import jwtDecode from 'jwt-decode'
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AuthService, LoginDto } from '../service'
 import { JWT_TOKEN_COOKIE_KEY } from './constants'
 
@@ -33,17 +34,14 @@ export const AuthContext = createContext<AuthContextType>({
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(typeof Cookies.get(JWT_TOKEN_COOKIE_KEY) !== 'undefined')
     const [profile, setProfile] = useState<ProfileDto>()
-
-    const setLogin = (token: string) => {
-        setIsLoggedIn(true)
-        Cookies.set(JWT_TOKEN_COOKIE_KEY, token)
-        setProfile(jwtDecode<ProfileDto>(token))
-    }
+    const navigate = useNavigate()
 
     const Login = (dto: LoginDto) => {
         AuthService.login(dto)
             .then(res => {
-                setLogin(res.data.access_token)
+                Cookies.set(JWT_TOKEN_COOKIE_KEY, res.data.access_token)
+                setIsLoggedIn(true)
+                navigate('/')
             })
             .catch(err => {
                 console.log(err)
@@ -51,14 +49,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     const Register = (dto: LoginDto) => {
         AuthService.register(dto).then(res => {
-            setLogin(res.data.access_token)
+            Cookies.set(JWT_TOKEN_COOKIE_KEY, res.data.access_token)
+            setIsLoggedIn(true)
+            navigate('/')
         })
     }
     const Logout = () => {
         Cookies.remove(JWT_TOKEN_COOKIE_KEY)
         setIsLoggedIn(false)
         setProfile(undefined)
+        navigate('/auth')
     }
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            const token = Cookies.get(JWT_TOKEN_COOKIE_KEY)
+            if (typeof token === 'undefined') return
+            setProfile(jwtDecode<ProfileDto>(token))
+        }
+    }, [isLoggedIn])
 
     return (
         <AuthContext.Provider value={{ isLoggedIn, profile, Login, Register, Logout }}>{children}</AuthContext.Provider>
