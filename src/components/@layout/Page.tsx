@@ -1,20 +1,11 @@
 import { Flex } from '@chakra-ui/react'
-import { FC, ReactChild } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Navbar } from './Navigation/Navbar'
 
-export const Page: FC<{ children?: ReactChild | ReactChild[] }> = ({
-    children,
-    ...props
-}) => (
+export const Page: React.FC<{ children?: React.ReactNode }> = ({ children, ...props }) => (
     <>
         <Navbar />
-        <Flex
-            flexDirection="column"
-            px="4"
-            mx="auto"
-            maxWidth={['100%', '48rem', '48rem', '64rem']}
-        >
+        <Flex flexDirection="column" px="4" mx="auto" maxWidth={['100%', '48rem', '48rem', '64rem']}>
             <Outlet />
             {children}
         </Flex>

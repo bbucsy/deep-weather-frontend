@@ -10,32 +10,35 @@ import { Home } from './components/@pages/Home'
 import { NeuralModelDetails } from './components/@pages/NeuralModelDetails'
 import { NeuralNetworkNew } from './components/@pages/NeuralModelNew'
 import { Predictions } from './components/@pages/Predictions'
+import { AuthProvider } from './utils/AuthContext'
 
 export const App = () => (
     <React.StrictMode>
         <ChakraProvider>
             <BrowserRouter>
                 <ColorModeScript />
-                <Routes>
-                    <Route path="/">
-                        <Route index element={<Home />}></Route>
-                        <Route path="city">
-                            <Route index element={<CityList />}></Route>
-                            <Route path="new" element={<CityNew />}></Route>
-                            <Route path=":id" element={<CityDetails />}></Route>
+                <AuthProvider>
+                    <Routes>
+                        <Route path="/">
+                            <Route index element={<Home />}></Route>
+                            <Route path="city">
+                                <Route index element={<CityList />}></Route>
+                                <Route path="new" element={<CityNew />}></Route>
+                                <Route path=":id" element={<CityDetails />}></Route>
+                            </Route>
+                            <Route path="neural-model">
+                                <Route path="new" element={<NeuralNetworkNew />}></Route>
+                                <Route path=":id" element={<NeuralModelDetails />}></Route>
+                            </Route>
+                            <Route path="predictions">
+                                <Route index element={<Predictions />}></Route>
+                            </Route>
+                            <Route path="auth">
+                                <Route index element={<AuthPage />}></Route>
+                            </Route>
                         </Route>
-                        <Route path="neural-model">
-                            <Route path="new" element={<NeuralNetworkNew />}></Route>
-                            <Route path=":id" element={<NeuralModelDetails />}></Route>
-                        </Route>
-                        <Route path="predictions">
-                            <Route index element={<Predictions />}></Route>
-                        </Route>
-                        <Route path="auth">
-                            <Route index element={<AuthPage />}></Route>
-                        </Route>
-                    </Route>
-                </Routes>
+                    </Routes>
+                </AuthProvider>
             </BrowserRouter>
         </ChakraProvider>
     </React.StrictMode>

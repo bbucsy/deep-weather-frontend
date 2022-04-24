@@ -1,4 +1,4 @@
-import { CityApi, NeuralModelApi, PredictionsApi } from './api'
+import { AuthApi, CityApi, NeuralModelApi, PredictionsApi } from './api'
 import axios from 'axios'
 import { Configuration } from './configuration'
 import { JWT_TOKEN_COOKIE_KEY } from '../utils/constants'
@@ -22,3 +22,4 @@ axiosInstance.interceptors.request.use(config => {
 export const CityService = new CityApi(configuration, baseUrl)
 export const NeuralModelService = new NeuralModelApi(configuration)
 export const PredictionService = new PredictionsApi(configuration)
+export const AuthService = new AuthApi(configuration)

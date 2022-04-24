@@ -18,6 +18,7 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { Link } from 'react-router-dom'
 import { NavItem, NavItems } from '../../../utils/NavItem'
 import { Logo } from './Logo'
+import { useAuthContext } from '../../../utils/useAuthContext'
 
 const NavLink = ({ navitem }: { navitem: NavItem }) => (
     <Box
@@ -36,14 +37,12 @@ const NavLink = ({ navitem }: { navitem: NavItem }) => (
 export const Navbar: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
+    const { isLoggedIn, profile } = useAuthContext()
+
     return (
         <>
             <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} mb={5}>
-                <Flex
-                    h={16}
-                    alignItems={'center'}
-                    justifyContent={'space-between'}
-                >
+                <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
                         icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
@@ -53,11 +52,7 @@ export const Navbar: React.FC = () => {
                     />
                     <HStack spacing={8} alignItems={'center'}>
                         <Logo />
-                        <HStack
-                            as={'nav'}
-                            spacing={4}
-                            display={{ base: 'none', md: 'flex' }}
-                        >
+                        <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                             {NavItems.map(link => (
                                 <NavLink key={link.text} navitem={link} />
                             ))}
@@ -65,14 +60,8 @@ export const Navbar: React.FC = () => {
                     </HStack>
                     <Flex alignItems={'center'}>
                         <Menu>
-                            <MenuButton
-                                as={Button}
-                                rounded={'full'}
-                                variant={'link'}
-                                cursor={'pointer'}
-                                minW={0}
-                            >
-                                <Text>User</Text>
+                            <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
+                                <Text>{isLoggedIn ? profile?.username : 'LogIn'}</Text>
                             </MenuButton>
                             <MenuList>
                                 <MenuItem>Link 1</MenuItem>
