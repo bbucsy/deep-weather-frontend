@@ -1,4 +1,5 @@
 import { Divider, Heading, Table, TableCaption, TableContainer, Tbody, Text, Th, Thead, Tr } from '@chakra-ui/react'
+import { Marker, Map } from 'pigeon-maps'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { CityDto, CityService } from '../../service'
@@ -19,6 +20,8 @@ export const CityDetails: React.FC = () => {
         })
     }, [id, setCity])
 
+    if (typeof city === 'undefined') return <></>
+
     return (
         <Page>
             <Heading>{city?.name}</Heading>
@@ -29,7 +32,9 @@ export const CityDetails: React.FC = () => {
                 </Text>{' '}
                 <CoordinateText latitude={city?.lat!} longitude={city?.lon!}></CoordinateText>
             </Paragraph>
-
+            <Map height={300} defaultCenter={[city?.lat || 0, city?.lon || 0]} defaultZoom={11}>
+                <Marker width={50} anchor={[city?.lat || 0, city?.lon || 0]} />
+            </Map>
             <TableContainer>
                 <Table variant="simple">
                     <TableCaption placement="top">Neural-models connected to {city?.name}</TableCaption>
