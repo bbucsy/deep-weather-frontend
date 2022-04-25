@@ -20,6 +20,7 @@ export interface AuthContextType {
     isLoggedIn: boolean
     profile?: ProfileDto
     Login: (dto: LoginDto) => Promise<void>
+    LoginGH: (token: string) => Promise<void>
     Register: (dto: LoginDto) => Promise<void>
     Logout: () => void
 }
@@ -29,6 +30,7 @@ export const AuthContext = createContext<AuthContextType>({
     Login: () => Promise.resolve(),
     Register: () => Promise.resolve(),
     Logout: () => {},
+    LoginGH: () => Promise.resolve(),
 })
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -43,6 +45,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             navigate('/')
         })
     }
+
+    const LoginGH = async (token: string) => {
+        return AuthService.oauthTokenExchange({ token: token }).then(res => {
+            Cookies.set(JWT_TOKEN_COOKIE_KEY, res.data.access_token)
+            setIsLoggedIn(true)
+            navigate('/')
+        })
+    }
+
     const Register = async (dto: LoginDto) => {
         return AuthService.register(dto).then(res => {
             Cookies.set(JWT_TOKEN_COOKIE_KEY, res.data.access_token)
@@ -66,6 +77,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, [isLoggedIn])
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, profile, Login, Register, Logout }}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{ isLoggedIn, profile, Login, Register, Logout, LoginGH }}>
+            {children}
+        </AuthContext.Provider>
     )
 }

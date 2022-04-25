@@ -30,7 +30,8 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "openapi:generate": "openapi-generator-cli generate -i http://localhost:3000/api-json -g typescript-axios -o src/service --additional-properties=supportES6=true,withSeperateModelsAndApi=true,withInterfaces=true --skip-validate-spec"
     },
     "eslintConfig": {
         "extends": "react-app"
@@ -48,6 +49,7 @@
         ]
     },
     "devDependencies": {
+        "@openapitools/openapi-generator-cli": "^2.4.26",
         "@types/js-cookie": "^3.0.2",
         "@types/jwt-decode": "^3.1.0",
         "@types/react-dom": "^16.9.14",
