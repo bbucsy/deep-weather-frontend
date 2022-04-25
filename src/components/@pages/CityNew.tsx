@@ -48,7 +48,7 @@ export const CityNew: React.FC = () => {
     }, [watch])
 
     return (
-        <Page>
+        <Page adminRequired>
             <Flex>
                 <Box>
                     <form onSubmit={handleSubmit(onSubmit)}>

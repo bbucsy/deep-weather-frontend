@@ -19,7 +19,7 @@ export const NeuralModelDetails: React.FC = () => {
     }, [id, setModel])
 
     return (
-        <Page>
+        <Page loginRequired>
             <Card>
                 <Paragraph>
                     <Text as="span" fontWeight="bold">

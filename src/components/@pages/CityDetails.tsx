@@ -23,7 +23,7 @@ export const CityDetails: React.FC = () => {
     if (typeof city === 'undefined') return <></>
 
     return (
-        <Page>
+        <Page loginRequired>
             <Heading>{city?.name}</Heading>
             <Divider />
             <Paragraph>
