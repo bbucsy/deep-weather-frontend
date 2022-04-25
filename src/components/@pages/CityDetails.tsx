@@ -3,6 +3,8 @@ import { Marker, Map } from 'pigeon-maps'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { CityDto, CityService } from '../../service'
+import { Role } from '../../utils/AuthContext'
+import { useAuthContext } from '../../utils/useAuthContext'
 import { CoordinateText } from '../@common/CoordinateText'
 import { LinkButton } from '../@common/LinkButton'
 
@@ -13,6 +15,8 @@ import { Page } from '../@layout/Page'
 export const CityDetails: React.FC = () => {
     const { id } = useParams()
     const [city, setCity] = useState<CityDto>()
+
+    const { profile } = useAuthContext()
 
     useEffect(() => {
         CityService.findOne(Number.parseInt(id!)).then(res => {
@@ -52,7 +56,9 @@ export const CityDetails: React.FC = () => {
                     </Tbody>
                 </Table>
             </TableContainer>
-            <LinkButton href={`/neural-model/new?city=${city?.id}`}>Create new model</LinkButton>
+            {profile?.role === Role.Admin ? (
+                <LinkButton href={`/neural-model/new?city=${city?.id}`}>Create new model</LinkButton>
+            ) : null}
         </Page>
     )
 }

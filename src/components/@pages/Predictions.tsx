@@ -20,7 +20,6 @@ export const Predictions: React.FC = () => {
             setCityList(res.data)
             setSelectedCityId(res.data[0]?.id)
         })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setCityList, setSelectedCityId])
 
     return (
