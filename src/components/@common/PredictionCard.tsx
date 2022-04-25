@@ -1,5 +1,6 @@
 import { Box, Center, Divider, Flex, Spacer, Text } from '@chakra-ui/react'
 import { PredictionListDto, PredictionService } from '../../service'
+import { useAppStateContext } from '../../utils/AppStateContext'
 import { weatherCodeToLablel } from '../../utils/WeatherLabel'
 import { UserResponseButtons } from './UserResponseButtons'
 
@@ -11,13 +12,23 @@ export const PredictionCard: React.FC<PredictionCardProps> = ({ prediction }: Pr
     const wEnd = new Date(prediction.predictionTime)
     const wStart = new Date(prediction.predictionTime - 60 * 60 * 1000)
 
+    const { setLoading, throwSuccess, throwError } = useAppStateContext()
+
     const sendResponse = (code: number) => {
+        setLoading(true)
         PredictionService.addResponse({
             prediction_id: prediction.id,
             response: code,
-        }).then(() => {
-            console.log('DONE')
         })
+            .then(() => {
+                throwSuccess('Response sent!')
+            })
+            .catch(err => {
+                throwError('Could no send response')
+            })
+            .finally(() => {
+                setLoading(false)
+            })
     }
 
     return (

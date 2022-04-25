@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { CityService, CreateCityDto } from '../../service'
+import { useAppStateContext } from '../../utils/AppStateContext'
 
 import { Page } from '../@layout/Page'
 
@@ -25,10 +26,21 @@ export const CityNew: React.FC = () => {
 
     const navigate = useNavigate()
 
+    const { setLoading, throwSuccess, throwError } = useAppStateContext()
+
     const onSubmit: SubmitHandler<CreateCityDto> = data => {
-        CityService.create(data).then(() => {
-            navigate('/city')
-        })
+        setLoading(true)
+        CityService.create(data)
+            .then(() => {
+                navigate('/city')
+                throwSuccess('', 'City created successfully')
+            })
+            .catch(err => {
+                throwError('Could not create city')
+            })
+            .finally(() => {
+                setLoading(false)
+            })
     }
 
     useEffect(() => {
