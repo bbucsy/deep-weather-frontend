@@ -2,22 +2,48 @@ import { Flex, Stack, Heading, Box, FormControl, FormLabel, Input, Button, Text,
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { LoginDto } from '../../service'
+import { useAppStateContext } from '../../utils/AppStateContext'
+
 import { useAuthContext } from '../../utils/useAuthContext'
 import { Page } from '../@layout/Page'
 
 export const AuthPage: React.FC = () => {
     const [signup, setSignup] = useState<boolean>(false)
+    const { Login, Register } = useAuthContext()
+    const { register, handleSubmit } = useForm<LoginDto>()
+    const { throwError, throwSuccess, setLoading } = useAppStateContext()
 
     const changeForm = () => {
         setSignup(!signup)
     }
 
-    const { Login, Register } = useAuthContext()
-    const { register, handleSubmit } = useForm<LoginDto>()
-
     const onSubmit: SubmitHandler<LoginDto> = data => {
-        if (!signup) Login(data)
-        else Register(data)
+        setLoading(true)
+        if (!signup) {
+            Login(data)
+                .then(() => {
+                    throwSuccess('', 'Login successful')
+                })
+                .catch(err => {
+                    console.log(err)
+                    throwError('Could not log in')
+                })
+                .finally(() => {
+                    setLoading(false)
+                })
+        } else {
+            Register(data)
+                .then(() => {
+                    throwSuccess('', 'Registration successful')
+                })
+                .catch(err => {
+                    console.log(err)
+                    throwError('There is already a use with this username')
+                })
+                .finally(() => {
+                    setLoading(false)
+                })
+        }
     }
 
     const header = signup ? 'Sign up for more features' : 'Sign in to your account'

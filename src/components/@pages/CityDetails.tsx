@@ -3,6 +3,7 @@ import { Marker, Map } from 'pigeon-maps'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { CityDto, CityService } from '../../service'
+import { useAppStateContext } from '../../utils/AppStateContext'
 import { Role } from '../../utils/AuthContext'
 import { useAuthContext } from '../../utils/useAuthContext'
 import { CoordinateText } from '../@common/CoordinateText'
@@ -18,11 +19,22 @@ export const CityDetails: React.FC = () => {
 
     const { profile } = useAuthContext()
 
+    const { setLoading, throwError } = useAppStateContext()
+
     useEffect(() => {
-        CityService.findOne(Number.parseInt(id!)).then(res => {
-            setCity(res.data)
-        })
-    }, [id, setCity])
+        setLoading(true)
+        CityService.findOne(Number.parseInt(id!))
+            .then(res => {
+                setCity(res.data)
+            })
+            .catch(err => {
+                throwError('Unable to load city')
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id])
 
     if (typeof city === 'undefined') return <></>
 

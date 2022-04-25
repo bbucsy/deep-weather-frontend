@@ -4,8 +4,8 @@ import React, { createContext, useContext, useState } from 'react'
 export interface AppStateContextType {
     isLoading: boolean
     setLoading: (isLoading: boolean) => void
-    throwError: (message: string) => void
-    throwSuccess: (message: string) => void
+    throwError: (message: string, title?: string) => void
+    throwSuccess: (message: string, title?: string) => void
 }
 
 export const AppStateContext = createContext<AppStateContextType>({
@@ -16,31 +16,24 @@ export const AppStateContext = createContext<AppStateContextType>({
 })
 
 export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isLoading, setLoading] = useState<boolean>(false)
     const toast = useToast()
 
-    const setLoading = (value: boolean) => {
-        console.log('loading')
-        setIsLoading(value)
-    }
-
-    const throwError = (message: string) => {
-        console.log(message)
+    const throwError = (message: string, title?: string) => {
         toast({
-            title: 'An unexpected error occured',
+            title: title ?? 'An unexpected error occured',
             description: message,
             status: 'error',
-            duration: 1500,
+            duration: 3500,
             isClosable: true,
         })
     }
-    const throwSuccess = (message: string) => {
-        console.log(message)
+    const throwSuccess = (message: string, title?: string) => {
         toast({
-            title: 'Action successful',
+            title: title ?? 'Action successful',
             description: message,
             status: 'success',
-            duration: 1500,
+            duration: 3500,
             isClosable: true,
         })
     }
@@ -53,6 +46,6 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     )
 }
 
-export const useStateContext = () => {
+export const useAppStateContext = () => {
     return useContext<AppStateContextType>(AppStateContext)
 }

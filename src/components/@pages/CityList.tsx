@@ -15,6 +15,7 @@ import {
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CityDto, CityService } from '../../service'
+import { useAppStateContext } from '../../utils/AppStateContext'
 import { Role } from '../../utils/AuthContext'
 import { useAuthContext } from '../../utils/useAuthContext'
 import { CoordinateText } from '../@common/CoordinateText'
@@ -28,16 +29,37 @@ export const CityList: React.FC = () => {
 
     const { profile } = useAuthContext()
 
+    const { setLoading, throwSuccess, throwError } = useAppStateContext()
+
     useEffect(() => {
-        CityService.findAll().then(cities => {
-            setCityList(cities.data)
-        })
+        setLoading(true)
+        CityService.findAll()
+            .then(cities => {
+                setCityList(cities.data)
+            })
+            .catch(err => {
+                console.log(err)
+                throwError('Could not load city list')
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setCityList])
 
     const deleteCity = (id: number) => {
-        CityService.remove(id.toString()).then(() => {
-            setCityList(cityList.filter(city => city.id !== id))
-        })
+        setLoading(true)
+        CityService.remove(id.toString())
+            .then(() => {
+                setCityList(cityList.filter(city => city.id !== id))
+                throwSuccess('City deleted successfully')
+            })
+            .catch(err => {
+                throwError('Could not delete city')
+            })
+            .finally(() => {
+                setLoading(false)
+            })
     }
 
     return (
