@@ -10,6 +10,7 @@ import { CityNew } from './components/@pages/CityNew'
 import { Home } from './components/@pages/Home'
 import { NeuralModelDetails } from './components/@pages/NeuralModelDetails'
 import { NeuralNetworkNew } from './components/@pages/NeuralModelNew'
+import { NotFoundPage } from './components/@pages/NotFoundPage'
 import { Predictions } from './components/@pages/Predictions'
 import { AuthProvider } from './utils/AuthContext'
 
@@ -38,6 +39,7 @@ export const App = () => (
                                 <Route path="auth">
                                     <Route index element={<AuthPage />}></Route>
                                 </Route>
+                                <Route path="*" element={<NotFoundPage />} />
                             </Route>
                         </Routes>
                     </BaseLayout>
