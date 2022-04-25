@@ -37,7 +37,7 @@ export const CityList: React.FC = () => {
     }
 
     return (
-        <Page>
+        <Page loginRequired>
             <Heading py={5}>Cities</Heading>
             <Card>
                 <TableContainer>

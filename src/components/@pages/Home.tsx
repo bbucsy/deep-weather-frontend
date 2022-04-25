@@ -1,9 +1,4 @@
-import { Heading } from '@chakra-ui/react'
 import { FC } from 'react'
-import { Page } from '../@layout/Page'
+import { Navigate } from 'react-router-dom'
 
-export const Home: FC = () => (
-    <Page>
-        <Heading>I'm a Heading</Heading>
-    </Page>
-)
+export const Home: FC = () => <Navigate to="/predictions"></Navigate>
