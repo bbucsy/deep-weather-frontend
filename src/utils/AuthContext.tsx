@@ -19,15 +19,15 @@ export interface ProfileDto {
 export interface AuthContextType {
     isLoggedIn: boolean
     profile?: ProfileDto
-    Login: (dto: LoginDto) => void
-    Register: (dto: LoginDto) => void
+    Login: (dto: LoginDto) => Promise<void>
+    Register: (dto: LoginDto) => Promise<void>
     Logout: () => void
 }
 
 export const AuthContext = createContext<AuthContextType>({
     isLoggedIn: false,
-    Login: () => {},
-    Register: () => {},
+    Login: () => Promise.resolve(),
+    Register: () => Promise.resolve(),
     Logout: () => {},
 })
 
@@ -36,19 +36,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [profile, setProfile] = useState<ProfileDto>()
     const navigate = useNavigate()
 
-    const Login = (dto: LoginDto) => {
-        AuthService.login(dto)
-            .then(res => {
-                Cookies.set(JWT_TOKEN_COOKIE_KEY, res.data.access_token)
-                setIsLoggedIn(true)
-                navigate('/')
-            })
-            .catch(err => {
-                console.log(err)
-            })
+    const Login = async (dto: LoginDto) => {
+        return AuthService.login(dto).then(res => {
+            Cookies.set(JWT_TOKEN_COOKIE_KEY, res.data.access_token)
+            setIsLoggedIn(true)
+            navigate('/')
+        })
     }
-    const Register = (dto: LoginDto) => {
-        AuthService.register(dto).then(res => {
+    const Register = async (dto: LoginDto) => {
+        return AuthService.register(dto).then(res => {
             Cookies.set(JWT_TOKEN_COOKIE_KEY, res.data.access_token)
             setIsLoggedIn(true)
             navigate('/')
