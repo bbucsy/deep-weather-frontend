@@ -19,7 +19,7 @@ export const NeuralNetworkNew: React.FC = () => {
     }, [setCityList])
 
     return (
-        <Page>
+        <Page adminRequired>
             <Box>{cityList.length > 0 && <NeuralModelForm cityList={cityList} defaultCityId={defaultCityID} />}</Box>
         </Page>
     )

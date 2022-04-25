@@ -15,6 +15,8 @@ import {
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CityDto, CityService } from '../../service'
+import { Role } from '../../utils/AuthContext'
+import { useAuthContext } from '../../utils/useAuthContext'
 import { CoordinateText } from '../@common/CoordinateText'
 
 import { LinkButton } from '../@common/LinkButton'
@@ -23,6 +25,8 @@ import { Page } from '../@layout/Page'
 
 export const CityList: React.FC = () => {
     const [cityList, setCityList] = useState<CityDto[]>([])
+
+    const { profile } = useAuthContext()
 
     useEffect(() => {
         CityService.findAll().then(cities => {
@@ -37,7 +41,7 @@ export const CityList: React.FC = () => {
     }
 
     return (
-        <Page>
+        <Page loginRequired>
             <Heading py={5}>Cities</Heading>
             <Card>
                 <TableContainer>
@@ -75,7 +79,7 @@ export const CityList: React.FC = () => {
             </Card>
             <Divider />
 
-            <LinkButton href="/city/new">Add new city</LinkButton>
+            {profile?.role === Role.Admin ? <LinkButton href="/city/new">Add new city</LinkButton> : null}
         </Page>
     )
 }

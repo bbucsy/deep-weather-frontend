@@ -1,19 +1,7 @@
-import { CheckIcon, MinusIcon } from '@chakra-ui/icons'
-import {
-    Box,
-    Center,
-    Divider,
-    Flex,
-    IconButton,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
-    Spacer,
-    Text,
-} from '@chakra-ui/react'
+import { Box, Center, Divider, Flex, Spacer, Text } from '@chakra-ui/react'
 import { PredictionListDto, PredictionService } from '../../service'
 import { weatherCodeToLablel } from '../../utils/WeatherLabel'
+import { UserResponseButtons } from './UserResponseButtons'
 
 export interface PredictionCardProps {
     prediction: PredictionListDto
@@ -54,37 +42,7 @@ export const PredictionCard: React.FC<PredictionCardProps> = ({ prediction }: Pr
                         <Text fontWeight="bold">{weatherCodeToLablel(prediction.userResponseLabel)}</Text>
                     </Box>
                     <Spacer />
-                    <Box p="4">
-                        <IconButton
-                            aria-label="Right"
-                            icon={<CheckIcon />}
-                            bgColor="green"
-                            color="white"
-                            onClick={() => {
-                                sendResponse(prediction.predictedLabel)
-                            }}
-                            margin="3"
-                        ></IconButton>
-                        <Menu>
-                            <MenuButton as={IconButton} color="white" bgColor="red">
-                                <MinusIcon />
-                            </MenuButton>
-                            <MenuList>
-                                {[0, 1, 2, 3, 4, 5, 6]
-                                    .filter(c => c !== prediction.predictedLabel)
-                                    .map(c => (
-                                        <MenuItem
-                                            key={c}
-                                            onClick={() => {
-                                                sendResponse(c)
-                                            }}
-                                        >
-                                            {weatherCodeToLablel(c)}
-                                        </MenuItem>
-                                    ))}
-                            </MenuList>
-                        </Menu>
-                    </Box>
+                    <UserResponseButtons prediction={prediction} sendResponse={sendResponse} />
                 </Flex>
             </Box>
         </Box>
