@@ -46,7 +46,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         })
     }
 
-    const LoginGH = async (token: string) => {}
+    const LoginGH = async (token: string) => {
+        return AuthService.oauthTokenExchange({ token: token }).then(res => {
+            Cookies.set(JWT_TOKEN_COOKIE_KEY, res.data.access_token)
+            setIsLoggedIn(true)
+            navigate('/')
+        })
+    }
 
     const Register = async (dto: LoginDto) => {
         return AuthService.register(dto).then(res => {

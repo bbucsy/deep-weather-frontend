@@ -9,18 +9,25 @@ export const OauthCallback: React.FC = () => {
     const [searchParams] = useSearchParams()
     const code = searchParams.get('code')
 
-    const { Login, Register } = useAuthContext()
-    const { throwError, throwSuccess } = useAppStateContext()
+    const { LoginGH } = useAuthContext()
+    const { throwError } = useAppStateContext()
 
     useEffect(() => {
-        if (typeof code !== 'undefined') {
+        if (typeof code !== 'undefined' && code != null) {
+            LoginGH(code).catch(err => {
+                console.log(err)
+                throwError('Could not login via Github. See console for more info!')
+            })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [code])
 
     return (
         <Page>
             <Center>
-                <Text>Your token is {code}</Text>
+                <Text>Please wait while we verify your login!</Text>
+            </Center>
+            <Center>
                 <CircularProgress isIndeterminate color="green.300" />
             </Center>
         </Page>
