@@ -28,7 +28,7 @@ export const lagger = async <T>(todo: Promise<T>): Promise<T> => {
     return new Promise<void>(resolve => {
         setTimeout(() => {
             resolve()
-        }, 1000)
+        }, 2000)
     }).then(() => {
         return todo
     })

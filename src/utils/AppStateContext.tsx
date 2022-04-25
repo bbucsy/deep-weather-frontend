@@ -1,5 +1,6 @@
-import { Progress, useToast } from '@chakra-ui/react'
+import { useToast } from '@chakra-ui/react'
 import React, { createContext, useContext, useState } from 'react'
+import { Loading } from '../components/@common/Loader'
 
 export interface AppStateContextType {
     isLoading: boolean
@@ -40,7 +41,7 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
     return (
         <AppStateContext.Provider value={{ isLoading, setLoading, throwError, throwSuccess }}>
-            {isLoading ? <Progress size="xs" isIndeterminate /> : <></>}
+            {isLoading ? <Loading timeout={0.5} /> : <></>}
             {children}
         </AppStateContext.Provider>
     )
