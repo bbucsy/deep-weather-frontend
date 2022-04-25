@@ -1,10 +1,11 @@
-import { Flex, Stack, Heading, Box, FormControl, FormLabel, Input, Button, Text, Link } from '@chakra-ui/react'
+import { Flex, Stack, Heading, Box, FormControl, FormLabel, Input, Button, Text, Link, Divider } from '@chakra-ui/react'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { LoginDto } from '../../service'
 import { useAppStateContext } from '../../utils/AppStateContext'
 
 import { useAuthContext } from '../../utils/useAuthContext'
+import { GithubLoginButton } from '../@common/GithubLoginButton'
 import { Page } from '../@layout/Page'
 
 export const AuthPage: React.FC = () => {
@@ -90,6 +91,8 @@ export const AuthPage: React.FC = () => {
                             </form>
                         </Stack>
                     </Box>
+                    <Divider />
+                    <GithubLoginButton />
                 </Stack>
             </Flex>
         </Page>
