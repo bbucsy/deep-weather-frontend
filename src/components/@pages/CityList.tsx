@@ -85,14 +85,16 @@ export const CityList: React.FC = () => {
                                     <Td>
                                         <CoordinateText latitude={city.lat} longitude={city.lon}></CoordinateText>
                                     </Td>
-                                    <Td>
-                                        <IconButton
-                                            aria-label="Delete city"
-                                            colorScheme={'red'}
-                                            icon={<DeleteIcon />}
-                                            onClick={() => deleteCity(city.id)}
-                                        />
-                                    </Td>
+                                    {profile?.role === Role.Admin && (
+                                        <Td>
+                                            <IconButton
+                                                aria-label="Delete city"
+                                                colorScheme={'red'}
+                                                icon={<DeleteIcon />}
+                                                onClick={() => deleteCity(city.id)}
+                                            />
+                                        </Td>
+                                    )}
                                 </Tr>
                             ))}
                         </Tbody>

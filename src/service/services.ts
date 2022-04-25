@@ -19,9 +19,9 @@ axiosInstance.interceptors.request.use(config => {
     return config
 })
 
-export const CityService = new CityApi(configuration, baseUrl)
-export const NeuralModelService = new NeuralModelApi(configuration)
-export const PredictionService = new PredictionsApi(configuration)
+export const CityService = new CityApi(configuration, baseUrl, axiosInstance)
+export const NeuralModelService = new NeuralModelApi(configuration, baseUrl, axiosInstance)
+export const PredictionService = new PredictionsApi(configuration, baseUrl, axiosInstance)
 export const AuthService = new AuthApi(configuration)
 
 export const lagger = async <T>(todo: Promise<T>): Promise<T> => {
