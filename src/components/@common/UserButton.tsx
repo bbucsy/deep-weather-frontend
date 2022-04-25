@@ -38,7 +38,6 @@ export const UserButton: React.FC = () => {
                 {profile?.role === Role.Admin ? (
                     <>
                         <MenuItem>Admin dashboard</MenuItem>
-                        <MenuItem>Link 2</MenuItem>
                         <MenuDivider />
                     </>
                 ) : null}
