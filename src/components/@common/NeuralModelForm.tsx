@@ -28,8 +28,12 @@ export const NeuralModelForm: React.FC<NeuralModelFormProps> = ({ cityList, defa
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl isInvalid={typeof errors.name !== 'undefined'}>
-                <FormLabel htmlFor="name">City name</FormLabel>
+                <FormLabel fontWeight="bold" htmlFor="name">
+                    Model name
+                </FormLabel>
                 <Input
+                    bgColor="white"
+                    color="black.900"
                     id="name"
                     placeholder="Simple RNN"
                     {...register('name', {
@@ -40,8 +44,12 @@ export const NeuralModelForm: React.FC<NeuralModelFormProps> = ({ cityList, defa
             </FormControl>
 
             <FormControl isInvalid={typeof errors.epochs !== 'undefined'}>
-                <FormLabel htmlFor="epochs">Initial training epochs</FormLabel>
+                <FormLabel fontWeight="bold" htmlFor="epochs">
+                    Initial training epochs
+                </FormLabel>
                 <Input
+                    bgColor="white"
+                    color="black.900"
                     id="epochs"
                     placeholder="1"
                     {...register('epochs', {
@@ -54,8 +62,12 @@ export const NeuralModelForm: React.FC<NeuralModelFormProps> = ({ cityList, defa
             </FormControl>
 
             <FormControl isInvalid={typeof errors.hiddenLayerCount !== 'undefined'}>
-                <FormLabel htmlFor="hiddenLayerCount">Number of Hidden Layers</FormLabel>
+                <FormLabel fontWeight="bold" htmlFor="hiddenLayerCount">
+                    Number of Hidden Layers
+                </FormLabel>
                 <Input
+                    bgColor="white"
+                    color="black.900"
                     id="hiddenLayerCount"
                     placeholder="1"
                     {...register('hiddenLayerCount', {
@@ -68,8 +80,12 @@ export const NeuralModelForm: React.FC<NeuralModelFormProps> = ({ cityList, defa
             </FormControl>
 
             <FormControl isInvalid={typeof errors.lstm_count !== 'undefined'}>
-                <FormLabel htmlFor="lstm_count">Number of LSTM units</FormLabel>
+                <FormLabel fontWeight="bold" htmlFor="lstm_count">
+                    Number of LSTM units
+                </FormLabel>
                 <Input
+                    bgColor="white"
+                    color="black.900"
                     id="lstm_count"
                     placeholder="1"
                     {...register('lstm_count', {
@@ -82,8 +98,11 @@ export const NeuralModelForm: React.FC<NeuralModelFormProps> = ({ cityList, defa
             </FormControl>
 
             <FormControl isInvalid={typeof errors.city !== 'undefined'}>
-                <FormLabel htmlFor="city">City</FormLabel>
+                <FormLabel fontWeight="bold" htmlFor="city">
+                    City
+                </FormLabel>
                 <Select
+                    bgColor="white"
                     placeholder="Select a city"
                     defaultValue={defaultCityValue}
                     {...register('city', {
@@ -99,7 +118,7 @@ export const NeuralModelForm: React.FC<NeuralModelFormProps> = ({ cityList, defa
                 <FormErrorMessage>{errors.city?.message}</FormErrorMessage>
             </FormControl>
 
-            <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
+            <Button mt={4} colorScheme="primary" isLoading={isSubmitting} type="submit">
                 Submit
             </Button>
         </form>

@@ -1,5 +1,5 @@
 import { ExternalLinkIcon } from '@chakra-ui/icons'
-import { Box, Divider, Select } from '@chakra-ui/react'
+import { Box, Select } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { CityDto, CityService } from '../../service'
 import { useAppStateContext } from '../../utils/AppStateContext'
@@ -35,7 +35,13 @@ export const Predictions: React.FC = () => {
     return (
         <Page>
             {cityList && cityList.length > 0 && (
-                <Select icon={<ExternalLinkIcon />} onChange={selectionChanged} value={selectedCityId}>
+                <Select
+                    icon={<ExternalLinkIcon />}
+                    onChange={selectionChanged}
+                    value={selectedCityId}
+                    bgColor="white"
+                    pb={'5'}
+                >
                     {cityList.map(city => (
                         <option value={city.id} key={city.id}>
                             {city.name}
@@ -44,8 +50,7 @@ export const Predictions: React.FC = () => {
                 </Select>
             )}
 
-            <Divider />
-            <Box mt="5">
+            <Box>
                 <PredictionsTab cityId={selectedCityId} />
             </Box>
         </Page>

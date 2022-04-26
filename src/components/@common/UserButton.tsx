@@ -35,11 +35,10 @@ export const UserButton: React.FC = () => {
                 display={{ base: 'none', md: 'inline-flex' }}
                 fontSize={'sm'}
                 fontWeight={600}
-                color={'white'}
-                bg={'teal'}
+                colorScheme={'primary'}
                 onClick={() => navigate('/auth')}
                 _hover={{
-                    bg: 'teal.300',
+                    bg: 'primary.300',
                 }}
             >
                 Sign in
@@ -59,6 +58,7 @@ export const UserButton: React.FC = () => {
                 </Center>
                 {profile?.role === Role.Admin ? (
                     <>
+                        <MenuDivider />
                         <MenuItem
                             onClick={() =>
                                 wrapPromise(

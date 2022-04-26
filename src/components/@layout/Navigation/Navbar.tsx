@@ -1,6 +1,6 @@
-import { Box, Flex, HStack, IconButton, useDisclosure, useColorModeValue, Stack } from '@chakra-ui/react'
+import { Box, Flex, HStack, IconButton, useDisclosure, Stack, Link } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
-import { Link } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import { NavItem, NavItems } from '../../../utils/NavItem'
 import { Logo } from './Logo'
 import { UserButton } from '../../@common/UserButton'
@@ -17,16 +17,17 @@ const NavLink: React.FC<NavLinkProps> = ({ navitem, isLoggedIn, profile }) => {
     if (navitem.adminRequired && profile?.role !== Role.Admin) return null
 
     return (
-        <Box
-            px={2}
-            py={1}
-            rounded={'md'}
-            _hover={{
-                textDecoration: 'none',
-                bg: 'gray.200',
-            }}
-        >
-            <Link to={navitem.link}>{navitem.text}</Link>
+        <Box px={2} py={1}>
+            <Link
+                as={RouterLink}
+                to={navitem.link}
+                _hover={{
+                    textDecoration: 'none',
+                    color: 'primary.600',
+                }}
+            >
+                {navitem.text}
+            </Link>
         </Box>
     )
 }
@@ -37,7 +38,7 @@ export const Navbar: React.FC = () => {
 
     return (
         <>
-            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+            <Box bgColor="transparent" px={4}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}

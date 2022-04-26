@@ -8,7 +8,7 @@ export const NotFoundPage: React.FC = () => {
                 display="inline-block"
                 as="h2"
                 size="2xl"
-                bgGradient="linear(to-r, teal.400, teal.600)"
+                bgGradient="linear(to-r, primary.400, primary.600)"
                 backgroundClip="text"
             >
                 404
@@ -16,17 +16,11 @@ export const NotFoundPage: React.FC = () => {
             <Text fontSize="18px" mt={3} mb={2}>
                 Page Not Found
             </Text>
-            <Text color={'gray.500'} mb={6}>
+            <Text color={'black.500'} mb={6}>
                 The page you're looking for does not seem to exist
             </Text>
 
-            <LinkButton
-                colorScheme="teal"
-                bgGradient="linear(to-r, teal.400, teal.500, teal.600)"
-                color="white"
-                href="/"
-                variant="solid"
-            >
+            <LinkButton colorScheme="primary" color="white" href="/" variant="solid">
                 Go to Home
             </LinkButton>
         </Box>

@@ -7,7 +7,7 @@ export const BaseLayout: React.FC<{ children?: React.ReactNode }> = ({ children 
     return (
         <Flex direction="column" minHeight="100vh">
             <Navbar />
-            <Box bgColor="white" flex="1" pb="20">
+            <Box bgColor="gray.50" flex="1" pb="20">
                 {children}
             </Box>
             <Footer />

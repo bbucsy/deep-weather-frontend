@@ -33,12 +33,11 @@ export const NeuralModelDetails: React.FC = () => {
         <Page loginRequired>
             {typeof model !== 'undefined' && (
                 <Card>
-                    <Paragraph>
-                        <Text as="span" fontWeight="bold">
-                            Model name:
-                        </Text>
-                        {`\t${model?.name}`}
-                    </Paragraph>
+                    <Text as="span" fontWeight="bold">
+                        Model name:
+                    </Text>
+                    {`\t${model?.name}`}
+
                     <Divider />
                     <Paragraph>
                         <Text as="span" fontWeight="bold">

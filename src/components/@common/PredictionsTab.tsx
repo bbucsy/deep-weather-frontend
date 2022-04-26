@@ -39,7 +39,7 @@ export const PredictionsTab: React.FC<PredictionsTabProps> = ({ cityId }: Predic
         )
 
     return (
-        <Tabs>
+        <Tabs colorScheme={'primary'}>
             <TabList>
                 {predictions.map(p => (
                     <Tab key={p.id}>{p.model.name}</Tab>

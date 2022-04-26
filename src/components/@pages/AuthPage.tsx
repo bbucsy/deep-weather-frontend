@@ -72,17 +72,16 @@ export const AuthPage: React.FC = () => {
                                 <Stack spacing={10} mt="5">
                                     <Text>
                                         Or{' '}
-                                        <Link as="span" color="blue" onClick={changeForm}>
+                                        <Link as="span" color="primary.600" onClick={changeForm}>
                                             {actionText}
                                         </Link>{' '}
                                         {explainText}
                                     </Text>
                                     <Button
-                                        bg={'blue.400'}
-                                        color={'white'}
+                                        colorScheme={'primary'}
                                         type="submit"
                                         _hover={{
-                                            bg: 'blue.500',
+                                            bg: 'primary.300',
                                         }}
                                     >
                                         {buttonText}

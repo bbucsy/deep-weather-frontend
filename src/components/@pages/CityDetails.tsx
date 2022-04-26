@@ -11,6 +11,7 @@ import { LinkButton } from '../@common/LinkButton'
 
 import { NeuralModelTableItem } from '../@common/NeuralModelTableItem'
 import { Paragraph } from '../@common/Paragraph'
+import { Card } from '../@layout/Card'
 import { Page } from '../@layout/Page'
 
 export const CityDetails: React.FC = () => {
@@ -40,36 +41,40 @@ export const CityDetails: React.FC = () => {
 
     return (
         <Page loginRequired>
-            <Heading>{city?.name}</Heading>
-            <Divider />
-            <Paragraph>
-                <Text as={'span'} fontWeight={'bold'}>
-                    Coordinates:
-                </Text>{' '}
-                <CoordinateText latitude={city?.lat!} longitude={city?.lon!}></CoordinateText>
-            </Paragraph>
-            <Map height={300} defaultCenter={[city?.lat || 0, city?.lon || 0]} defaultZoom={11}>
-                <Marker width={50} anchor={[city?.lat || 0, city?.lon || 0]} />
-            </Map>
-            <TableContainer>
-                <Table variant="simple">
-                    <TableCaption placement="top">Neural-models connected to {city?.name}</TableCaption>
-                    <Thead>
-                        <Tr>
-                            <Th>Name</Th>
-                            <Th>Accuracy</Th>
-                            <Th>Status</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {city?.neuralModels.map(nm => (
-                            <NeuralModelTableItem id={nm.id} name={nm.name} key={nm.id} />
-                        ))}
-                    </Tbody>
-                </Table>
-            </TableContainer>
+            <Card>
+                <Heading>{city?.name}</Heading>
+                <Divider />
+                <Paragraph>
+                    <Text as={'span'} fontWeight={'bold'}>
+                        Coordinates:
+                    </Text>{' '}
+                    <CoordinateText latitude={city?.lat!} longitude={city?.lon!}></CoordinateText>
+                </Paragraph>
+                <Map height={300} defaultCenter={[city?.lat || 0, city?.lon || 0]} defaultZoom={11}>
+                    <Marker width={50} anchor={[city?.lat || 0, city?.lon || 0]} />
+                </Map>
+                <TableContainer>
+                    <Table variant="simple">
+                        <TableCaption placement="top">Neural-models connected to {city?.name}</TableCaption>
+                        <Thead>
+                            <Tr>
+                                <Th>Name</Th>
+                                <Th>Accuracy</Th>
+                                <Th>Status</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {city?.neuralModels.map(nm => (
+                                <NeuralModelTableItem id={nm.id} name={nm.name} key={nm.id} />
+                            ))}
+                        </Tbody>
+                    </Table>
+                </TableContainer>
+            </Card>
             {profile?.role === Role.Admin ? (
-                <LinkButton href={`/neural-model/new?city=${city?.id}`}>Create new model</LinkButton>
+                <LinkButton href={`/neural-model/new?city=${city?.id}`} colorScheme={'primary'}>
+                    Create new model
+                </LinkButton>
             ) : null}
         </Page>
     )

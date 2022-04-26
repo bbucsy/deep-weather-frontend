@@ -1,4 +1,4 @@
-import { Button, Center, Text } from '@chakra-ui/react'
+import { Button, Center } from '@chakra-ui/react'
 import { FaGithub } from 'react-icons/fa'
 
 export const GithubLoginButton: React.FC = () => {
@@ -9,11 +9,16 @@ export const GithubLoginButton: React.FC = () => {
         window.location.href = url
     }
     return (
-        <Center p={8}>
-            <Button w={'full'} maxW={'md'} variant={'outline'} leftIcon={<FaGithub />} onClick={clickHandler}>
-                <Center>
-                    <Text>Continue with Github</Text>
-                </Center>
+        <Center mt={'5'}>
+            <Button
+                w={'full'}
+                maxW={'md'}
+                bgColor={'black.800'}
+                color={'white'}
+                leftIcon={<FaGithub />}
+                onClick={clickHandler}
+            >
+                Sign in with Github
             </Button>
         </Center>
     )
