@@ -3,6 +3,7 @@ import {
     Divider,
     Heading,
     IconButton,
+    Link,
     Table,
     TableCaption,
     TableContainer,
@@ -13,7 +14,7 @@ import {
     Tr,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import { CityDto, CityService } from '../../service'
 import { useAppStateContext } from '../../utils/AppStateContext'
 import { Role } from '../../utils/AuthContext'
@@ -80,7 +81,9 @@ export const CityList: React.FC = () => {
                             {cityList.map(city => (
                                 <Tr key={city.id}>
                                     <Td>
-                                        <Link to={`/city/${city.id}`}>{city.name}</Link>
+                                        <Link as={RouterLink} to={`/city/${city.id}`} color={'primary.500'}>
+                                            {city.name}
+                                        </Link>
                                     </Td>
                                     <Td>
                                         <CoordinateText latitude={city.lat} longitude={city.lon}></CoordinateText>
@@ -89,7 +92,8 @@ export const CityList: React.FC = () => {
                                         <Td>
                                             <IconButton
                                                 aria-label="Delete city"
-                                                colorScheme={'red'}
+                                                bgColor={'red.400'}
+                                                color="white"
                                                 icon={<DeleteIcon />}
                                                 onClick={() => deleteCity(city.id)}
                                             />
@@ -103,7 +107,11 @@ export const CityList: React.FC = () => {
             </Card>
             <Divider />
 
-            {profile?.role === Role.Admin ? <LinkButton href="/city/new">Add new city</LinkButton> : null}
+            {profile?.role === Role.Admin ? (
+                <LinkButton colorScheme={'primary'} href="/city/new">
+                    Add new city
+                </LinkButton>
+            ) : null}
         </Page>
     )
 }

@@ -16,10 +16,11 @@ import { Predictions } from './components/@pages/Predictions'
 import { AppStateProvider } from './utils/AppStateContext'
 import { AuthProvider } from './utils/AuthContext'
 import { ResponseList } from './components/@pages/ResponseList'
+import { appTheme } from './utils/AppTheme'
 
 export const App = () => (
     <React.StrictMode>
-        <ChakraProvider>
+        <ChakraProvider theme={appTheme}>
             <BrowserRouter>
                 <ColorModeScript />
                 <AppStateProvider>

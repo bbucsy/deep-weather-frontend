@@ -28,7 +28,7 @@ export const OauthCallback: React.FC = () => {
                 <Text>Please wait while we verify your login!</Text>
             </Center>
             <Center>
-                <CircularProgress isIndeterminate color="green.300" />
+                <CircularProgress isIndeterminate color="primary.300" />
             </Center>
         </Page>
     )

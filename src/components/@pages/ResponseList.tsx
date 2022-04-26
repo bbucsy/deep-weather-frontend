@@ -7,7 +7,6 @@ import {
     Th,
     Tbody,
     Td,
-    Tfoot,
     Stat,
     StatGroup,
     StatHelpText,
@@ -19,6 +18,7 @@ import { useEffect, useState } from 'react'
 import { PredictionService, ResponseListDto } from '../../service'
 import { useAppStateContext } from '../../utils/AppStateContext'
 import { weatherCodeToLablel } from '../../utils/WeatherLabel'
+import { Card } from '../@layout/Card'
 import { Page } from '../@layout/Page'
 
 interface StatState {
@@ -40,10 +40,11 @@ export const ResponseList: React.FC = () => {
         setLoading(true)
         PredictionService.responses()
             .then(res => {
-                setResponses(res.data)
+                const resp = res.data
+                setResponses(resp)
 
-                const count = responses.length
-                const good = responses.filter(r => r.prediction === r.userResponse).length
+                const count = resp.length
+                const good = resp.filter(r => r.prediction === r.userResponse).length
                 const bad = count - good
 
                 setStat({
@@ -65,56 +66,51 @@ export const ResponseList: React.FC = () => {
     return (
         <Page adminRequired>
             {responses && responses.length > 0 && (
-                <Stack spacing={10}>
-                    <StatGroup bgColor={'gray.50'} borderRadius="lg" p={'5'}>
-                        <Stat>
-                            <StatLabel>All response sent</StatLabel>
-                            <StatNumber>{stat.count}</StatNumber>
-                        </Stat>
+                <Card>
+                    <Stack spacing={10}>
+                        <StatGroup borderRadius="lg" p={'5'}>
+                            <Stat>
+                                <StatLabel>All response sent</StatLabel>
+                                <StatNumber>{stat.count}</StatNumber>
+                            </Stat>
 
-                        <Stat>
-                            <StatLabel>Valid predictions</StatLabel>
-                            <StatNumber>{stat.good}</StatNumber>
-                            <StatHelpText>{((stat.good / stat.count) * 100).toFixed(2)}%</StatHelpText>
-                        </Stat>
-                        <Stat>
-                            <StatLabel>InValid predictions</StatLabel>
-                            <StatNumber>{stat.bad}</StatNumber>
-                            <StatHelpText>{((stat.bad / stat.count) * 100).toFixed(2)}%</StatHelpText>
-                        </Stat>
-                    </StatGroup>
+                            <Stat>
+                                <StatLabel>Valid predictions</StatLabel>
+                                <StatNumber>{stat.good}</StatNumber>
+                                <StatHelpText>{((stat.good / stat.count) * 100).toFixed(2)}%</StatHelpText>
+                            </Stat>
+                            <Stat>
+                                <StatLabel>InValid predictions</StatLabel>
+                                <StatNumber>{stat.bad}</StatNumber>
+                                <StatHelpText>{((stat.bad / stat.count) * 100).toFixed(2)}%</StatHelpText>
+                            </Stat>
+                        </StatGroup>
 
-                    <TableContainer>
-                        <Table variant="simple">
-                            <TableCaption>Recieved user responses</TableCaption>
-                            <Thead>
-                                <Tr>
-                                    <Th>Response time</Th>
-                                    <Th>Model name</Th>
-                                    <Th>Prediction</Th>
-                                    <Th>User response</Th>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                                {responses.map(r => (
-                                    <Tr key={r.id}>
-                                        <Td>{r.created_at}</Td>
-                                        <Td>{r.model.name}</Td>
-                                        <Td>{weatherCodeToLablel(r.prediction)}</Td>
-                                        <Td>{weatherCodeToLablel(r.userResponse)}</Td>
+                        <TableContainer>
+                            <Table variant="simple">
+                                <TableCaption>Recieved user responses</TableCaption>
+                                <Thead>
+                                    <Tr>
+                                        <Th>Response time</Th>
+                                        <Th>Model name</Th>
+                                        <Th>Prediction</Th>
+                                        <Th>User response</Th>
                                     </Tr>
-                                ))}
-                            </Tbody>
-                            <Tfoot>
-                                <Tr>
-                                    <Th>To convert</Th>
-                                    <Th>into</Th>
-                                    <Th isNumeric>multiply by</Th>
-                                </Tr>
-                            </Tfoot>
-                        </Table>
-                    </TableContainer>
-                </Stack>
+                                </Thead>
+                                <Tbody>
+                                    {responses.map(r => (
+                                        <Tr key={r.id}>
+                                            <Td>{r.created_at}</Td>
+                                            <Td>{r.model.name}</Td>
+                                            <Td>{weatherCodeToLablel(r.prediction)}</Td>
+                                            <Td>{weatherCodeToLablel(r.userResponse)}</Td>
+                                        </Tr>
+                                    ))}
+                                </Tbody>
+                            </Table>
+                        </TableContainer>
+                    </Stack>
+                </Card>
             )}
         </Page>
     )

@@ -65,9 +65,12 @@ export const CityNew: React.FC = () => {
                 <Box>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <FormControl isInvalid={typeof errors.name !== 'undefined'}>
-                            <FormLabel htmlFor="name">City name</FormLabel>
+                            <FormLabel fontWeight="bold" htmlFor="name">
+                                City name
+                            </FormLabel>
                             <Input
                                 id="name"
+                                bgColor="white"
                                 placeholder="Budapest"
                                 {...register('name', {
                                     required: 'Name is required',
@@ -78,8 +81,11 @@ export const CityNew: React.FC = () => {
                         </FormControl>
 
                         <FormControl isInvalid={typeof errors.lat !== 'undefined'}>
-                            <FormLabel htmlFor="lat">Latitude</FormLabel>
+                            <FormLabel fontWeight="bold" htmlFor="lat">
+                                Latitude
+                            </FormLabel>
                             <Input
+                                bgColor="white"
                                 id="lat"
                                 placeholder="47.4979"
                                 {...register('lat', {
@@ -97,8 +103,11 @@ export const CityNew: React.FC = () => {
                         </FormControl>
 
                         <FormControl isInvalid={typeof errors.lon !== 'undefined'}>
-                            <FormLabel htmlFor="lon">Longitude</FormLabel>
+                            <FormLabel fontWeight="bold" htmlFor="lon">
+                                Longitude
+                            </FormLabel>
                             <Input
+                                bgColor="white"
                                 id="lon"
                                 placeholder="19.0402"
                                 {...register('lon', {
@@ -115,7 +124,7 @@ export const CityNew: React.FC = () => {
                             <FormErrorMessage>{errors.lon?.message}</FormErrorMessage>
                         </FormControl>
 
-                        <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
+                        <Button mt={4} colorScheme="primary" isLoading={isSubmitting} type="submit">
                             Submit
                         </Button>
                     </form>

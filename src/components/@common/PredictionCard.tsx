@@ -33,9 +33,9 @@ export const PredictionCard: React.FC<PredictionCardProps> = ({ prediction }: Pr
 
     return (
         <Box boxShadow="lg" borderRadius="lg">
-            <Box bgColor="teal" p="3" borderTopRadius="lg">
+            <Box bgColor="secondary.300" p="3" borderTopRadius="lg">
                 <Center pb="5">
-                    <Text fontWeight="bold" color="gray.300">
+                    <Text fontWeight="bold" color="black.800">
                         {wStart.toLocaleTimeString()} - {wEnd.toLocaleTimeString()}
                     </Text>
                 </Center>

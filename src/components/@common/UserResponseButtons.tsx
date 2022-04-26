@@ -24,7 +24,7 @@ export const UserResponseButtons: React.FC<UserResponseButtonsProp> = ({ sendRes
             <IconButton
                 aria-label="Right"
                 icon={<CheckIcon />}
-                bgColor="green"
+                bgColor="green.400"
                 color="white"
                 onClick={() => {
                     sendResponse(prediction.predictedLabel)
@@ -32,7 +32,7 @@ export const UserResponseButtons: React.FC<UserResponseButtonsProp> = ({ sendRes
                 margin="3"
             ></IconButton>
             <Menu>
-                <MenuButton as={IconButton} color="white" bgColor="red">
+                <MenuButton as={IconButton} color="white" bgColor="red.400">
                     <MinusIcon />
                 </MenuButton>
                 <MenuList>

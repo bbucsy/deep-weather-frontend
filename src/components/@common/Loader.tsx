@@ -8,9 +8,13 @@ type LoadingProps = {
 export const Loading: FC<LoadingProps> = ({ timeout }) => {
     const [show, setShow] = useState<boolean>(false)
     useEffect(() => {
-        setTimeout(() => {
+        const timeOut = setTimeout(() => {
             setShow(true)
         }, timeout * 1000)
+
+        return () => {
+            clearTimeout(timeOut)
+        }
     }, [timeout])
     if (!show) return null
     return <Progress size="xs" isIndeterminate />
