@@ -15,6 +15,7 @@ import { NotFoundPage } from './components/@pages/NotFoundPage'
 import { Predictions } from './components/@pages/Predictions'
 import { AppStateProvider } from './utils/AppStateContext'
 import { AuthProvider } from './utils/AuthContext'
+import { ResponseList } from './components/@pages/ResponseList'
 
 export const App = () => (
     <React.StrictMode>
@@ -37,7 +38,8 @@ export const App = () => (
                                         <Route path=":id" element={<NeuralModelDetails />}></Route>
                                     </Route>
                                     <Route path="predictions">
-                                        <Route index element={<Predictions />}></Route>
+                                        <Route index element={<Predictions />} />
+                                        <Route path="responses" element={<ResponseList />} />
                                     </Route>
                                     <Route path="auth">
                                         <Route index element={<AuthPage />}></Route>
