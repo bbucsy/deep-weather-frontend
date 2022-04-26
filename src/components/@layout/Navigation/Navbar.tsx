@@ -21,6 +21,7 @@ const NavLink: React.FC<NavLinkProps> = ({ navitem, isLoggedIn, profile }) => {
             <Link
                 as={RouterLink}
                 to={navitem.link}
+                fontSize="lg"
                 _hover={{
                     textDecoration: 'none',
                     color: 'primary.600',
