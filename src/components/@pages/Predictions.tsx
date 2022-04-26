@@ -1,6 +1,6 @@
-import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { Box, Select } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
+import { FaMapMarkerAlt } from 'react-icons/fa'
 import { CityDto, CityService } from '../../service'
 import { useAppStateContext } from '../../utils/AppStateContext'
 import { PredictionsTab } from '../@common/PredictionsTab'
@@ -36,11 +36,11 @@ export const Predictions: React.FC = () => {
         <Page>
             {cityList && cityList.length > 0 && (
                 <Select
-                    icon={<ExternalLinkIcon />}
+                    icon={<FaMapMarkerAlt />}
                     onChange={selectionChanged}
                     value={selectedCityId}
                     bgColor="white"
-                    pb={'5'}
+                    mb="8"
                 >
                     {cityList.map(city => (
                         <option value={city.id} key={city.id}>

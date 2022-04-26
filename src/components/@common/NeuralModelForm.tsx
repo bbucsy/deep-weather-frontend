@@ -1,5 +1,6 @@
 import { FormControl, FormLabel, Input, FormErrorMessage, Select, Button } from '@chakra-ui/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { FaMapMarkerAlt } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { CityDto, CreateModelDto, NeuralModelService } from '../../service'
 
@@ -102,6 +103,7 @@ export const NeuralModelForm: React.FC<NeuralModelFormProps> = ({ cityList, defa
                     City
                 </FormLabel>
                 <Select
+                    icon={<FaMapMarkerAlt />}
                     bgColor="white"
                     placeholder="Select a city"
                     defaultValue={defaultCityValue}

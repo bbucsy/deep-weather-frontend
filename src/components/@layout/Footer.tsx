@@ -4,7 +4,7 @@ import { SocialButton } from '../@common/SocialButton'
 
 export const Footer: React.FC = () => {
     return (
-        <Box bg="white" color="gray.800">
+        <Box bg="gray.50">
             <Container
                 as={Stack}
                 maxW={'6xl'}

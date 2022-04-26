@@ -39,7 +39,7 @@ export const Navbar: React.FC = () => {
 
     return (
         <>
-            <Box bgColor="transparent" px={4}>
+            <Box bgColor="gray.50" px={4}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
