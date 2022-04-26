@@ -40,10 +40,11 @@ export const ResponseList: React.FC = () => {
         setLoading(true)
         PredictionService.responses()
             .then(res => {
-                setResponses(res.data)
+                const resp = res.data
+                setResponses(resp)
 
-                const count = responses.length
-                const good = responses.filter(r => r.prediction === r.userResponse).length
+                const count = resp.length
+                const good = resp.filter(r => r.prediction === r.userResponse).length
                 const bad = count - good
 
                 setStat({
