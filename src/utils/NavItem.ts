@@ -15,4 +15,9 @@ export const NavItems: NavItem[] = [
         text: 'Predictions',
         link: '/predictions',
     },
+    {
+        text: 'Response list',
+        link: '/predictions/responses',
+        adminRequired: true,
+    },
 ]
