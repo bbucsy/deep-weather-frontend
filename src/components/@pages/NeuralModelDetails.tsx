@@ -55,7 +55,8 @@ export const NeuralModelDetails: React.FC = () => {
                         <Text as="span" fontWeight="bold">
                             Accuracy:
                         </Text>
-                        {`\t${model?.accuracy.toFixed(2)}%`}
+                        {`\t`}
+                        {model?.accuracy ? `${(model.accuracy * 100).toFixed(2)}%` : 'N/A'}
                     </Paragraph>
                     <Paragraph>
                         <Text as="span" fontWeight="bold">
