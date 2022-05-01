@@ -150,7 +150,7 @@ export interface LoginDto {
      * @type {string}
      * @memberof LoginDto
      */
-    'username': string;
+    'email': string;
     /**
      * 
      * @type {string}
@@ -329,6 +329,31 @@ export interface PredictionListDto {
 /**
  * 
  * @export
+ * @interface RegisterDto
+ */
+export interface RegisterDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterDto
+     */
+    'email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterDto
+     */
+    'password': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterDto
+     */
+    'username': string;
+}
+/**
+ * 
+ * @export
  * @interface ResponseListDto
  */
 export interface ResponseListDto {
@@ -461,13 +486,13 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {LoginDto} loginDto 
+         * @param {RegisterDto} registerDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        register: async (loginDto: LoginDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'loginDto' is not null or undefined
-            assertParamExists('register', 'loginDto', loginDto)
+        register: async (registerDto: RegisterDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'registerDto' is not null or undefined
+            assertParamExists('register', 'registerDto', registerDto)
             const localVarPath = `/auth/register`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -487,7 +512,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(loginDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(registerDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -526,12 +551,12 @@ export const AuthApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {LoginDto} loginDto 
+         * @param {RegisterDto} registerDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async register(loginDto: LoginDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LoginResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.register(loginDto, options);
+        async register(registerDto: RegisterDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LoginResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.register(registerDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -564,12 +589,12 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @param {LoginDto} loginDto 
+         * @param {RegisterDto} registerDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        register(loginDto: LoginDto, options?: any): AxiosPromise<LoginResponseDto> {
-            return localVarFp.register(loginDto, options).then((request) => request(axios, basePath));
+        register(registerDto: RegisterDto, options?: any): AxiosPromise<LoginResponseDto> {
+            return localVarFp.register(registerDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -600,12 +625,12 @@ export interface AuthApiInterface {
 
     /**
      * 
-     * @param {LoginDto} loginDto 
+     * @param {RegisterDto} registerDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApiInterface
      */
-    register(loginDto: LoginDto, options?: AxiosRequestConfig): AxiosPromise<LoginResponseDto>;
+    register(registerDto: RegisterDto, options?: AxiosRequestConfig): AxiosPromise<LoginResponseDto>;
 
 }
 
@@ -640,13 +665,13 @@ export class AuthApi extends BaseAPI implements AuthApiInterface {
 
     /**
      * 
-     * @param {LoginDto} loginDto 
+     * @param {RegisterDto} registerDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public register(loginDto: LoginDto, options?: AxiosRequestConfig) {
-        return AuthApiFp(this.configuration).register(loginDto, options).then((request) => request(this.axios, this.basePath));
+    public register(registerDto: RegisterDto, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).register(registerDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

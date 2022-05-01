@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 import jwtDecode from 'jwt-decode'
 import React, { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AuthService, LoginDto } from '../service'
+import { AuthService, LoginDto, RegisterDto } from '../service'
 import { JWT_TOKEN_COOKIE_KEY } from './constants'
 
 export enum Role {
@@ -21,7 +21,7 @@ export interface AuthContextType {
     profile?: ProfileDto
     Login: (dto: LoginDto) => Promise<void>
     LoginGH: (token: string) => Promise<void>
-    Register: (dto: LoginDto) => Promise<void>
+    Register: (dto: RegisterDto) => Promise<void>
     Logout: () => void
 }
 
@@ -54,7 +54,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         })
     }
 
-    const Register = async (dto: LoginDto) => {
+    const Register = async (dto: RegisterDto) => {
         return AuthService.register(dto).then(res => {
             Cookies.set(JWT_TOKEN_COOKIE_KEY, res.data.access_token)
             setIsLoggedIn(true)
