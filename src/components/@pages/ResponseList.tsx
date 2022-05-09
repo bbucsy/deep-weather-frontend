@@ -36,23 +36,20 @@ export const ResponseList: React.FC = () => {
     })
     const { setLoading, throwError } = useAppStateContext()
 
+    const getData = async () => {
+        const data = await Promise.all([PredictionService.responses(), PredictionService.getResponseStatistics()])
+        setResponses(data[0].data)
+        const stats = data[1].data
+        setStat({
+            count: stats.numResponses,
+            good: stats.numGood,
+            bad: stats.numResponses - stats.numGood,
+        })
+    }
+
     useEffect(() => {
         setLoading(true)
-        PredictionService.responses()
-            .then(res => {
-                const resp = res.data
-                setResponses(resp)
-
-                const count = resp.length
-                const good = resp.filter(r => r.prediction === r.userResponse).length
-                const bad = count - good
-
-                setStat({
-                    count,
-                    good,
-                    bad,
-                })
-            })
+        getData()
             .catch(err => {
                 console.log(err)
                 throwError('Could not load responses')
@@ -67,6 +64,7 @@ export const ResponseList: React.FC = () => {
         <Page adminRequired>
             {responses && responses.length > 0 && (
                 <Card>
+                    <h2>Response statistics:</h2>
                     <Stack spacing={10}>
                         <StatGroup borderRadius="lg" p={'5'}>
                             <Stat>
@@ -75,12 +73,12 @@ export const ResponseList: React.FC = () => {
                             </Stat>
 
                             <Stat>
-                                <StatLabel>Valid predictions</StatLabel>
+                                <StatLabel>Model validations</StatLabel>
                                 <StatNumber>{stat.good}</StatNumber>
                                 <StatHelpText>{((stat.good / stat.count) * 100).toFixed(2)}%</StatHelpText>
                             </Stat>
                             <Stat>
-                                <StatLabel>InValid predictions</StatLabel>
+                                <StatLabel>Model invalidations</StatLabel>
                                 <StatNumber>{stat.bad}</StatNumber>
                                 <StatHelpText>{((stat.bad / stat.count) * 100).toFixed(2)}%</StatHelpText>
                             </Stat>
@@ -88,7 +86,7 @@ export const ResponseList: React.FC = () => {
 
                         <TableContainer>
                             <Table variant="simple">
-                                <TableCaption>Recieved user responses</TableCaption>
+                                <TableCaption placement="top">The last 100 user responses</TableCaption>
                                 <Thead>
                                     <Tr>
                                         <Th>Response time</Th>

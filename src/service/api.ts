@@ -420,6 +420,25 @@ export interface ResponseListDtoModel {
      */
     'name'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface ResponseStatisticsDto
+ */
+export interface ResponseStatisticsDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof ResponseStatisticsDto
+     */
+    'numResponses': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResponseStatisticsDto
+     */
+    'numGood': number;
+}
 
 /**
  * AuthApi - axios parameter creator
@@ -1739,6 +1758,39 @@ export const PredictionsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * Gets statistical data about the responses
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getResponseStatistics: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/predictions/responses/statistics`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Gets all user responses to weather predictions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1811,6 +1863,15 @@ export const PredictionsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Gets statistical data about the responses
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getResponseStatistics(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseStatisticsDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getResponseStatistics(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Gets all user responses to weather predictions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1856,6 +1917,14 @@ export const PredictionsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.currentPredictionsOfCity(cityId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Gets statistical data about the responses
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getResponseStatistics(options?: any): AxiosPromise<ResponseStatisticsDto> {
+            return localVarFp.getResponseStatistics(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Gets all user responses to weather predictions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1897,6 +1966,14 @@ export interface PredictionsApiInterface {
      * @memberof PredictionsApiInterface
      */
     currentPredictionsOfCity(cityId: number, options?: AxiosRequestConfig): AxiosPromise<Array<PredictionListDto>>;
+
+    /**
+     * Gets statistical data about the responses
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PredictionsApiInterface
+     */
+    getResponseStatistics(options?: AxiosRequestConfig): AxiosPromise<ResponseStatisticsDto>;
 
     /**
      * Gets all user responses to weather predictions
@@ -1945,6 +2022,16 @@ export class PredictionsApi extends BaseAPI implements PredictionsApiInterface {
      */
     public currentPredictionsOfCity(cityId: number, options?: AxiosRequestConfig) {
         return PredictionsApiFp(this.configuration).currentPredictionsOfCity(cityId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets statistical data about the responses
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PredictionsApi
+     */
+    public getResponseStatistics(options?: AxiosRequestConfig) {
+        return PredictionsApiFp(this.configuration).getResponseStatistics(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
