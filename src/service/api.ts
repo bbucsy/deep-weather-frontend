@@ -231,7 +231,7 @@ export interface NeuralModelDto {
      * @type {number}
      * @memberof NeuralModelDto
      */
-    'accuracy': number;
+    'accuracy'?: number;
     /**
      * 
      * @type {number}
@@ -1246,6 +1246,43 @@ export const NeuralModelApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        overallAccuracy: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('overallAccuracy', 'id', id)
+            const localVarPath = `/neural-model/{id}/accuracy`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Forcefully  starts a prediction background job (Normally started by cron)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1351,6 +1388,16 @@ export const NeuralModelApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async overallAccuracy(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<number>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.overallAccuracy(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Forcefully  starts a prediction background job (Normally started by cron)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1405,6 +1452,15 @@ export const NeuralModelApiFactory = function (configuration?: Configuration, ba
             return localVarFp.findOne(id, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        overallAccuracy(id: string, options?: any): AxiosPromise<number> {
+            return localVarFp.overallAccuracy(id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Forcefully  starts a prediction background job (Normally started by cron)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1454,6 +1510,15 @@ export interface NeuralModelApiInterface {
      * @memberof NeuralModelApiInterface
      */
     findOne(id: string, options?: AxiosRequestConfig): AxiosPromise<NeuralModelDto>;
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NeuralModelApiInterface
+     */
+    overallAccuracy(id: string, options?: AxiosRequestConfig): AxiosPromise<number>;
 
     /**
      * Forcefully  starts a prediction background job (Normally started by cron)
@@ -1510,6 +1575,17 @@ export class NeuralModelApi extends BaseAPI implements NeuralModelApiInterface {
      */
     public findOne(id: string, options?: AxiosRequestConfig) {
         return NeuralModelApiFp(this.configuration).findOne(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NeuralModelApi
+     */
+    public overallAccuracy(id: string, options?: AxiosRequestConfig) {
+        return NeuralModelApiFp(this.configuration).overallAccuracy(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
