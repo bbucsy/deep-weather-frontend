@@ -174,6 +174,19 @@ export interface LoginResponseDto {
 /**
  * 
  * @export
+ * @interface NeuralModelAccuracyDto
+ */
+export interface NeuralModelAccuracyDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof NeuralModelAccuracyDto
+     */
+    'accuracy'?: number;
+}
+/**
+ * 
+ * @export
  * @interface NeuralModelBase
  */
 export interface NeuralModelBase {
@@ -1393,7 +1406,7 @@ export const NeuralModelApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async overallAccuracy(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<number>> {
+        async overallAccuracy(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NeuralModelAccuracyDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.overallAccuracy(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1457,7 +1470,7 @@ export const NeuralModelApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        overallAccuracy(id: string, options?: any): AxiosPromise<number> {
+        overallAccuracy(id: string, options?: any): AxiosPromise<NeuralModelAccuracyDto> {
             return localVarFp.overallAccuracy(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1518,7 +1531,7 @@ export interface NeuralModelApiInterface {
      * @throws {RequiredError}
      * @memberof NeuralModelApiInterface
      */
-    overallAccuracy(id: string, options?: AxiosRequestConfig): AxiosPromise<number>;
+    overallAccuracy(id: string, options?: AxiosRequestConfig): AxiosPromise<NeuralModelAccuracyDto>;
 
     /**
      * Forcefully  starts a prediction background job (Normally started by cron)

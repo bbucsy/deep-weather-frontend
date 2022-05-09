@@ -45,7 +45,7 @@ export const NeuralModelTableItem: React.FC<NMTIProps> = ({ id, name }: NMTIProp
             <Td>
                 <Link to={`/neural-model/${id}`}>{name}</Link>{' '}
             </Td>
-            <Td>{model?.accuracy ? `${(model.accuracy * 100).toFixed(2)}%` : 'N/A'}</Td>
+            <Td>{typeof model?.accuracy !== 'undefined' ? `${(model.accuracy * 100).toFixed(2)}%` : 'N/A'}</Td>
             <Td>{neruralModelStatus(model?.status!)}</Td>
         </Tr>
     )
