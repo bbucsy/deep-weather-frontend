@@ -4,8 +4,9 @@ import { NeuralModelService } from '../../service'
 import { useAppStateContext } from '../../utils/AppStateContext'
 import { Role } from '../../utils/AuthContext'
 import { useAuthContext } from '../../utils/useAuthContext'
+import { NavLink } from '../@layout/Navigation/NavLink'
 
-export const UserButton: React.FC = () => {
+export const UserButton: React.FC<{ isNavlink?: boolean }> = ({ isNavlink }) => {
     const { isLoggedIn, profile, Logout } = useAuthContext()
     const navigate = useNavigate()
 
@@ -29,7 +30,11 @@ export const UserButton: React.FC = () => {
         }
     }
 
-    if (!isLoggedIn)
+    if (isNavlink && !isLoggedIn) {
+        return <NavLink navitem={{ link: '/auth', text: 'Sign In' }} isLoggedIn={false}></NavLink>
+    }
+
+    if (!isNavlink && !isLoggedIn)
         return (
             <Button
                 display={{ base: 'none', md: 'inline-flex' }}
@@ -44,6 +49,8 @@ export const UserButton: React.FC = () => {
                 Sign in
             </Button>
         )
+
+    if (isNavlink && isLoggedIn) return <></>
 
     return (
         <Menu>

@@ -12,14 +12,24 @@ import { Page } from '../@layout/Page'
 export const NeuralModelDetails: React.FC = () => {
     const { id } = useParams()
     const [model, setModel] = useState<NeuralModelDto>()
+    const [allAccuracy, setAllAccuracy] = useState<number>(0)
     const { setLoading, throwError } = useAppStateContext()
+
+    const getData = async () => {
+        if (typeof id === 'undefined') throw new Error('Id not specified')
+
+        const modelInfo = NeuralModelService.findOne(id)
+        const accuracyInfo = NeuralModelService.overallAccuracy(id)
+        const combined = Promise.all([modelInfo, accuracyInfo]).then(result => {
+            setModel(result[0].data)
+            setAllAccuracy(result[1].data.accuracy ?? 0)
+        })
+        return combined
+    }
 
     useEffect(() => {
         setLoading(true)
-        NeuralModelService.findOne(id!)
-            .then(res => {
-                setModel(res.data)
-            })
+        getData()
             .catch(err => {
                 throwError('Could not find Neural model')
             })
@@ -53,10 +63,17 @@ export const NeuralModelDetails: React.FC = () => {
                     </Paragraph>
                     <Paragraph>
                         <Text as="span" fontWeight="bold">
-                            Accuracy:
+                            Accuracy since last training:
                         </Text>
                         {`\t`}
                         {model?.accuracy ? `${(model.accuracy * 100).toFixed(2)}%` : 'N/A'}
+                    </Paragraph>
+                    <Paragraph>
+                        <Text as="span" fontWeight="bold">
+                            Overall accuracy:
+                        </Text>
+                        {`\t`}
+                        {(allAccuracy * 100).toFixed(2)} %
                     </Paragraph>
                     <Paragraph>
                         <Text as="span" fontWeight="bold">
